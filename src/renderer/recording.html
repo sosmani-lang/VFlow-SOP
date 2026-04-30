@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Recording</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="toolbar-body">
+  <div class="toolbar" id="toolbar">
+    <div class="rec-dot"></div>
+    <span class="rec-label">REC</span>
+    <span class="rec-keys hidden" id="rec-keys" title="Keystrokes are being captured">⌨</span>
+    <span class="rec-count" id="rec-count">0 steps</span>
+    <div class="spacer"></div>
+    <button class="tbtn" id="mic-btn" title="Record voice narration (transcribed)">🎙️</button>
+    <button class="tbtn" id="pause-btn" title="Pause">⏸</button>
+    <button class="tbtn" id="note-btn" title="Add note">✏️</button>
+    <button class="tbtn stop" id="stop-btn" title="Stop">⏹</button>
+  </div>
+  <script src="recording.js"></script>
+</body>
+</html>

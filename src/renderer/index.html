@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>VFlow Recorder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="container">
+    <header class="brand">
+      <div class="logo">V</div>
+      <div>
+        <h1>VFlow Recorder</h1>
+        <p class="muted">Capture desktop &amp; browser workflows</p>
+      </div>
+    </header>
+
+    <!-- Pairing view (shown when not paired) -->
+    <section id="pair-view" class="card hidden">
+      <h2>Pair this PC</h2>
+      <p class="muted">Open VFlow → SOPs → <strong>Pair this PC</strong> and enter the 6-digit code below.</p>
+      <input id="code-input" inputmode="numeric" maxlength="6" pattern="\d{6}" placeholder="123456" autocomplete="off" />
+      <button id="pair-btn" class="btn primary">Pair</button>
+      <p id="pair-msg" class="msg"></p>
+    </section>
+
+    <!-- Ready view (paired, idle) -->
+    <section id="ready-view" class="card hidden">
+      <h2>Ready to record</h2>
+      <p class="muted" id="paired-info"></p>
+
+      <label class="field">
+        <span>SOP title *</span>
+        <input id="sop-title" placeholder="e.g. Monthly bookkeeping close" />
+      </label>
+      <label class="field">
+        <span>Description</span>
+        <textarea id="sop-desc" rows="2" placeholder="Optional"></textarea>
+      </label>
+
+      <label class="toggle">
+        <input id="capture-keys" type="checkbox" />
+        <span>Capture keystrokes <em class="muted">(off by default)</em></span>
+      </label>
+      <p class="warn hidden" id="keys-warn">⌨ Keystrokes will be captured. A red indicator stays visible while recording.</p>
+
+      <button id="start-btn" class="btn primary">Start Recording</button>
+      <p class="muted small">Hotkey: Ctrl+Shift+R · Stop from tray menu or floating toolbar.</p>
+      <p class="muted small">🎙️ While recording, click the mic in the toolbar to add a transcribed voice narration step.</p>
+      <button id="unpair-btn" class="btn link">Unpair this device</button>
+    </section>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
