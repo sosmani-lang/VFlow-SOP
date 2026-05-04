@@ -42,7 +42,30 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Import Apple Certificate
+        env:
+          APPLE_CERT: ${{ secrets.APPLE_CERT }}
+          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
+        run: |
+          if [ -n "$APPLE_CERT" ]; then
+            echo "$APPLE_CERT" | base64 --decode > certificate.p12
+            security create-keychain -p actions build.keychain
+            security default-keychain -s build.keychain
+            security unlock-keychain -p actions build.keychain
+            security import certificate.p12 -k build.keychain -P "$APPLE_CERT_PASSWORD" -T /usr/bin/codesign
+            security set-key-partition-list -S apple-tool:,apple: -s -k actions build.keychain
+            rm certificate.p12
+            echo "Certificate imported successfully"
+          else
+            echo "No certificate found, building unsigned"
+          fi
+
       - name: Build macOS DMG
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          CSC_KEY_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
         run: npx electron-builder --mac dmg --publish never
 
       - name: Upload DMG artifact
